@@ -20,6 +20,12 @@ RSpec.describe 'Merchants API' do
       expect(merchant[:attributes][:name]).to be_a(String)
     end
   end
+  it "sends a default of 20 results per page" do
+
+  end
+  xit "sends results based on page and perpage query params" do
+
+  end
   xit 'sends empty and nil for 400 response' do
 
   end
