@@ -5,5 +5,7 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
   has_many :invoice_items, through: :invoices
 
-  scope :paginate, -> (page = 1, per_page = 20) {}
+  scope :paginate, -> (page, per_page = 20) {
+    limit(per_page).offset((page - 1) * per_page)
+  }
 end
