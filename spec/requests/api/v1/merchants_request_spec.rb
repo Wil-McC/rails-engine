@@ -10,26 +10,20 @@ RSpec.describe 'Merchants API' do
 
     merchants = JSON.parse(response.body, symbolize_names: true)
 
-    expect(merchants.count).to eq(5)
+    expect(merchants.count).to eq(1)
 
-    merchants.each do |merchant|
+    merchants[:data].each do |merchant|
       expect(merchant).to have_key(:id)
-      expect(merchant[:id]).to be_an(Integer)
+      expect(merchant[:id]).to be_an(String)
 
-      expect(merchant).to have_key(:name)
-      expect(merchant[:name]).to be_an(String)
-
-      expect(merchant).to have_key(:created_at)
-      expect(merchant[:created_at]).to be_an(String)
-
-      expect(merchant).to have_key(:updated_at)
-      expect(merchant[:updated_at]).to be_an(String)
+      expect(merchant[:attributes]).to have_key(:name)
+      expect(merchant[:attributes][:name]).to be_a(String)
     end
   end
   xit 'sends empty and nil for 400 response' do
 
   end
-  it 'sends a single merchant for id query' do
+  xit 'sends a single merchant for id query' do
 
   end
 end
