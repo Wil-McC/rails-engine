@@ -8,4 +8,8 @@ class Merchant < ApplicationRecord
   scope :paginate, -> (page, per_page = 20) {
     limit(per_page).offset((page - 1) * per_page)
   }
+
+  def all_items
+    items
+  end
 end
