@@ -53,15 +53,16 @@ RSpec.describe 'Merchants API' do
     expect(merchants[:data].length).to eq(5)
   end
   it "returns page 1 with 20 results if negative or 0 params are passed" do
+    create_list(:merchant, 22)
     get '/api/v1/merchants?page=0'
     expect(response).to be_successful
     merchants = JSON.parse(response.body, symbolize_names: true)
 
-    expect(merchants[:data].length).to eq(5)
+    expect(merchants[:data].length).to eq(20)
     get '/api/v1/merchants?page=-10'
     expect(response).to be_successful
     merchants = JSON.parse(response.body, symbolize_names: true)
-    expect(merchants[:data].length).to eq(5)
+    expect(merchants[:data].length).to eq(20)
   end
   xit 'sends empty and nil for 400 response' do
 
