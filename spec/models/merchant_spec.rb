@@ -59,4 +59,15 @@ RSpec.describe Merchant, type: :model do
       expect(res[4].name).to eq(@i5.name)
     end
   end
+  describe '#find' do
+    before :each do
+      @m1 = create(:merchant, name: 'Adama Cotton')
+      @m2 = create(:merchant, name: 'Walcott Fabrics')
+    end
+    it 'returns first alphabetical match' do
+      res = Merchant.find_first('cot')
+
+      expect(res).to eq(@m1)
+    end
+  end
 end

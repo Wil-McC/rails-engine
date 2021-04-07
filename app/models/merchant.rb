@@ -12,4 +12,12 @@ class Merchant < ApplicationRecord
   def all_items
     items
   end
+
+  def self.find_first(str)
+    find_all(str).first
+  end
+
+  def self.find_all(str)
+    where('name ILIKE ?', "%#{str}%")
+  end
 end
