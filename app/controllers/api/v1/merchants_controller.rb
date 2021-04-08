@@ -25,7 +25,6 @@ class Api::V1::MerchantsController < ApplicationController
       render json: MerchantRevenueSerializer.new(Merchant.top_revenue(limit))
     else
       render status: 400
-      # render json: {status: 'error', code: 400, message: 'quantity integer param required to fetch results'}
     end
   end
 end
