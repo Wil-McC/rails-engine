@@ -9,8 +9,8 @@ class Invoice < ApplicationRecord
     joins(invoice_items: :transactions)
     .where("transactions.result='success' AND invoices.status='packaged'")
     .group('invoices.id')
-    .select('invoices.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
-    .order('revenue DESC')
+    .select('invoices.*, sum(invoice_items.quantity * invoice_items.unit_price) AS potential_revenue')
+    .order('potential_revenue DESC')
     .limit(limit)
   end
 end

@@ -44,7 +44,7 @@ RSpec.describe 'unshipped potential revenue request' do
     ).to eq(true)
     expect(
       tops[:data].all? do |invoice|
-        invoice[:attributes].keys == [:revenue]
+        invoice[:attributes].keys == [:potential_revenue]
       end
     ).to eq(true)
   end

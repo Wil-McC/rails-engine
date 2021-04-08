@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       get 'merchants/find', to: 'merchants#find'
       get 'revenue/merchants', to: 'merchants#most_revenue'
       get 'revenue/unshipped', to: 'invoices#unshipped_revenue'
+      get 'revenue/merchants/:id', to: 'merchants#total_revenue'
       resources :merchants, only: [:index, :show] do
         resources :items, only: [:index], controller: "merchant_items"
       end

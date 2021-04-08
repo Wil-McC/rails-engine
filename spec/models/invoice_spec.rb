@@ -44,8 +44,8 @@ RSpec.describe Invoice, type: :model do
       expect(out.length).to eq(2)
       expect(out[0].class).to eq(Invoice)
       expect(out[1].class).to eq(Invoice)
-      expect(out[0].revenue).to be_a(Float)
-      expect(out[1].revenue).to be_a(Float)
+      expect(out[0].potential_revenue).to be_a(Float)
+      expect(out[1].potential_revenue).to be_a(Float)
     end
   end
 end

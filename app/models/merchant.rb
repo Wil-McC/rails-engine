@@ -5,8 +5,6 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
-  # has_many :invoice_items, through: :invoices
-
   scope :paginate, -> (page, per_page = 20) {
     limit(per_page).offset((page - 1) * per_page)
   }
@@ -30,5 +28,12 @@ class Merchant < ApplicationRecord
     .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
     .order('revenue DESC')
     .limit(limit)
+  end
+
+  def self.total_revenue(id)
+    joins(invoice_items: :transactions)
+    .where("invoices.merchant_id='#{id}' AND transactions.result='success' AND invoices.status='shipped'")
+    .group('merchants.id')
+    .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
   end
 end

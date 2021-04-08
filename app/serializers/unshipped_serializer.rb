@@ -1,4 +1,4 @@
 class UnshippedSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :revenue
+  attributes :potential_revenue
 end

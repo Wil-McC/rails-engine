@@ -27,4 +27,12 @@ class Api::V1::MerchantsController < ApplicationController
       render status: 400
     end
   end
+
+  def total_revenue
+    merchant = Merchant.find(params[:id])
+
+    render json: MerchantTotalSerializer.new(Merchant.total_revenue(merchant.id)[0])
+  rescue ActiveRecord::RecordNotFound
+    render status: 404
+  end
 end
