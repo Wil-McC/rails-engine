@@ -42,4 +42,12 @@ RSpec.describe 'the merchants with most revenue request' do
       end
     ).to eq(true)
   end
+  # it 'returns an error if quantity param is missing' do
+    # get '/api/v1/revenue/merchants'
+    # expect(response).to_not be_successful
+  # end
+  # it 'returns an error if quantity param is a string' do
+    # get '/api/v1/revenue/merchants?quantity=asdasd'
+    # expect(response).to_not be_successful
+  # end
 end

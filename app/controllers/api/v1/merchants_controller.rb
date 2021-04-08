@@ -21,7 +21,11 @@ class Api::V1::MerchantsController < ApplicationController
 
   def most_revenue
     limit = params[:quantity].to_i
-    # if limit > 0 && limit.class == Integer
-    render json: MerchantRevenueSerializer.new(Merchant.top_revenue(limit))
+    if limit > 0 && limit.class == Integer
+      render json: MerchantRevenueSerializer.new(Merchant.top_revenue(limit))
+    else
+      render status: 400
+      # render json: {status: 'error', code: 400, message: 'quantity integer param required to fetch results'}
+    end
   end
 end
