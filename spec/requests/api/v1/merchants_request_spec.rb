@@ -64,7 +64,4 @@ RSpec.describe 'Merchants API' do
     merchants = JSON.parse(response.body, symbolize_names: true)
     expect(merchants[:data].length).to eq(20)
   end
-  xit 'sends a single merchant for id query' do
-
-  end
 end
