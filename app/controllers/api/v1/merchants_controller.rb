@@ -21,7 +21,18 @@ class Api::V1::MerchantsController < ApplicationController
 
   def most_revenue
     limit = params[:quantity].to_i
-    # if limit > 0 && limit.class == Integer
-    render json: MerchantRevenueSerializer.new(Merchant.top_revenue(limit))
+    if limit > 0 && limit.class == Integer
+      render json: MerchantRevenueSerializer.new(Merchant.top_revenue(limit))
+    else
+      render status: 400
+    end
+  end
+
+  def total_revenue
+    merchant = Merchant.find(params[:id])
+
+    render json: MerchantTotalSerializer.new(Merchant.total_revenue(merchant.id)[0])
+  rescue ActiveRecord::RecordNotFound
+    render status: 404
   end
 end

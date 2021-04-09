@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'the merchants with most revenue request' do
+RSpec.describe 'the merchant total revenue request' do
   before :each do
     @m1 = create(:merchant)
     @m2 = create(:merchant)
@@ -11,8 +11,8 @@ RSpec.describe 'the merchants with most revenue request' do
 
     @item1 = create(:item, merchant_id: @m1.id)
     @item2 = create(:item, merchant_id: @m1.id)
-    @item3 = create(:item, merchant_id: @m2.id)
-    @item4 = create(:item, merchant_id: @m2.id)
+    @item3 = create(:item, merchant_id: @m1.id)
+    @item4 = create(:item, merchant_id: @m1.id)
 
     @t1 = create(:transaction, invoice_id: @invoice1.id, result: 'success')
     @t2 = create(:transaction, invoice_id: @invoice1.id, result: 'success')
@@ -24,30 +24,18 @@ RSpec.describe 'the merchants with most revenue request' do
     @ii3 = create(:invoice_item, item_id: @item3.id, invoice_id: @invoice2.id)
     @ii4 = create(:invoice_item, item_id: @item4.id, invoice_id: @invoice2.id)
   end
-  it 'returns a specified quantity of results by revenue DESC' do
-    get '/api/v1/revenue/merchants?quantity=3'
+  it 'returns total revenue for a single merchant' do
+    get "/api/v1/revenue/merchants/#{@m1.id}"
     expect(response).to be_successful
-    tops = JSON.parse(response.body, symbolize_names: true)
+    total = JSON.parse(response.body, symbolize_names: true)
 
-    expect(tops.keys).to eq([:data])
-    expect(tops[:data][0].keys).to eq([:id, :type, :attributes])
-    expect(
-      tops[:data].all? do |merch|
-        merch.keys == [:id, :type, :attributes]
-      end
-    ).to eq(true)
-    expect(
-      tops[:data].all? do |merch|
-        merch[:attributes].keys == [:name, :revenue]
-      end
-    ).to eq(true)
+    expect(total.keys).to eq([:data])
+    expect(total[:data].keys).to eq([:id, :type, :attributes])
+    expect(total[:data][:attributes].keys).to eq([:revenue])
+    expect(total[:data][:attributes][:revenue]).to be_a(Float)
   end
-  # it 'returns an error if quantity param is missing' do
-    # get '/api/v1/revenue/merchants'
-    # expect(response).to_not be_successful
-  # end
-  # it 'returns an error if quantity param is a string' do
-    # get '/api/v1/revenue/merchants?quantity=asdasd'
-    # expect(response).to_not be_successful
-  # end
+  it "returns a 404 error if no matching id" do
+    get "/api/v1/revenue/merchants/9999999"
+    expect(response).to_not be_successful
+  end
 end
