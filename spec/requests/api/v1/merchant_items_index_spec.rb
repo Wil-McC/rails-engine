@@ -21,7 +21,6 @@ RSpec.describe 'the merchant items index endpoint' do
         item.keys == [:id, :type, :attributes]
       end
     ).to eq(true)
-
     expect(
       items[:data].all? do |item|
         item[:attributes].keys == [:name, :description, :unit_price, :merchant_id]
