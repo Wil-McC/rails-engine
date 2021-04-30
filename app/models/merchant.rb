@@ -31,8 +31,9 @@ class Merchant < ApplicationRecord
   end
 
   def self.total_revenue(id)
+    # injection
     joins(invoice_items: :transactions)
-    .where("invoices.merchant_id='#{id}' AND transactions.result='success' AND invoices.status='shipped'")
+    .where("invoices.merchant_id=? AND transactions.result='success' AND invoices.status='shipped'", id)
     .group('merchants.id')
     .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
   end
