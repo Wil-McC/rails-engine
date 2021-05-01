@@ -100,7 +100,7 @@ RSpec.describe Merchant, type: :model do
     end
     it 'returns total revenue for a single merchant' do
       t1 = Merchant.total_revenue(@m1.id)
-      require "pry"; binding.pry
+
       expect(t1.length).to eq(1)
       expect(t1[0].revenue).to be_a(Float)
     end
